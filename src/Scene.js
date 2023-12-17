@@ -1,5 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import {button, useControls} from "leva";
+import {useState} from "react";
 
 const Scene = () => {
     const { position, color, wireframe, scale } = useControls("cube", {
@@ -26,6 +27,12 @@ const Scene = () => {
         xRotation:0
     })
 
+    const [active, setActive] = useState(false);
+    const clickHandler = () => {
+        setActive(!active);
+        console.log(active);
+    };
+
     return (
         <>
             <OrbitControls/>
@@ -36,6 +43,11 @@ const Scene = () => {
             <mesh position={[position.x, position.y, position.z]} scale={scale}>
                 <boxGeometry />
                 <meshStandardMaterial color={color} wireframe={wireframe} />
+            </mesh>
+
+            <mesh onClick={clickHandler} position-x={1}>
+                <boxGeometry />
+                <meshBasicMaterial color={active ? "pink" : "orange"} />
             </mesh>
         </>
     );
